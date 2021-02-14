@@ -1,136 +1,155 @@
-import 'package:covidvax/languages/languages.dart';
-import 'package:covidvax/languages/locale_constant.dart';
-import 'package:covidvax/models//language_data.dart';
-import 'package:covidvax/screens/countrieSelectionPage.dart';
-import 'package:covidvax/services/appConfig.dart';
-import 'package:covidvax/theme/style.dart' as style;
 import 'package:flutter/material.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:covidvax/theme/style.dart';
+import 'package:covidvax/screens/homePage.dart';
+import 'package:covidvax/languages/language_ar.dart';
+import 'package:covidvax/languages/language_fr.dart';
+import 'package:covidvax/languages/language_en.dart';
 
-class LandingPage extends StatefulWidget {
+class LandingPage2 extends StatefulWidget {
+  static final String path = "lib/src/pages/onboarding/intro6.dart";
   @override
-  State<StatefulWidget> createState() => LandingPageState();
+  _IntroSixPageState createState() => _IntroSixPageState();
 }
 
-class LandingPageState extends State<LandingPage> {
-  AppConfig _ac;
-
+class _IntroSixPageState extends State<LandingPage2> {
+  SwiperController _controller = SwiperController();
+  int _currentIndex = 0;
+  List<String> titles = [
+    LanguageEn().applicationName,
+    LanguageAR().applicationName,
+    LanguageFR().applicationName,
+  ];
+  final List<String> subtitles = [
+    LanguageEn().landingText + " " + LanguageEn().landingText2,
+    LanguageAR().landingText + " " + LanguageAR().landingText2,
+    LanguageFR().landingText + " " + LanguageFR().landingText2,
+  ];
+  final List<Color> colors = [
+    appTheme4().primaryColor,
+    appTheme4().hintColor,
+    appTheme4().dividerColor,
+  ];
   @override
   Widget build(BuildContext context) {
-    _ac = AppConfig(context);
-    return MaterialApp(
-      home: Container(
-        constraints: BoxConstraints.expand(),
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("assets/images/background.png"),
-                fit: BoxFit.fill)),
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: Container(
-            margin: EdgeInsets.only(
-                top: _ac.rHP(5), left: _ac.rHP(4), right: _ac.rHP(4)),
-            child: Center(
-              child: Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: _ac.rHP(3),
-                  ),
-                  Text(
-                    Languages.of(context).applicationName,
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.w900,
-                      color: style.appTheme4().primaryColor,
-                    ),
-                  ),
-                  SizedBox(
-                    height: _ac.rHP(3),
-                  ),
-                  Text(
-                    Languages.of(context).landingText,
-                    style: TextStyle(
-                        fontSize: 16, color: style.appTheme4().accentColor),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: _ac.rHP(3)),
-                  Text(
-                    Languages.of(context).landingText2,
-                    style: TextStyle(
-                        fontSize: 16, color: style.appTheme4().accentColor),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(
-                    height: _ac.rHP(50),
-                  ),
-                  _createLanguageDropDown(),
-                ],
+    return Scaffold(
+      body: Stack(
+        children: <Widget>[
+          Swiper(
+            loop: false,
+            index: _currentIndex,
+            onIndexChanged: (index) {
+              setState(() {
+                _currentIndex = index;
+              });
+            },
+            controller: _controller,
+            pagination: SwiperPagination(
+              builder: DotSwiperPaginationBuilder(
+                activeColor: Colors.red,
+                activeSize: 20.0,
               ),
             ),
-          ),
-          floatingActionButton: FloatingActionButton(
-            backgroundColor: style.appTheme4().scaffoldBackgroundColor,
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Home()),
+            itemCount: 3,
+            itemBuilder: (context, index) {
+              return IntroItem(
+                title: titles[index],
+                subtitle: subtitles[index],
+                bg: colors[index],
+                imageUrl: "assets/images/3515462.jpg",
               );
             },
-            child: Icon(
-              Icons.play_circle_outline,
-              color: style.appTheme4().buttonColor,
-              size: 45.0,
-            ),
-            elevation: 5,
           ),
-        ),
+          Align(
+            alignment: Alignment.bottomLeft,
+            child: FlatButton(
+              child: Text("Skip"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomePage()),
+                );
+              },
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomRight,
+            child: IconButton(
+              icon:
+                  Icon(_currentIndex == 2 ? Icons.check : Icons.arrow_forward),
+              onPressed: () {
+                if (_currentIndex != 2)
+                  _controller.next();
+                else
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomePage()),
+                  );
+              },
+            ),
+          )
+        ],
       ),
     );
   }
+}
 
-  _createLanguageDropDown() {
-    return DropdownButton<LanguageData>(
-      icon: Icon(
-        Icons.arrow_drop_down,
-        color: style.appTheme4().hintColor,
-        size: 35,
-      ),
-      iconSize: 30,
-      hint: Row(
-        children: [
-          Icon(
-            Icons.language,
-            color: style.appTheme4().hintColor,
-          ),
-          SizedBox(width: 10),
-          Text(
-            Languages.of(context).chooseLanguage,
-            style: TextStyle(fontSize: 25, color: style.appTheme4().hintColor),
-          ),
-        ],
-      ),
-      onChanged: (LanguageData language) {
-        changeLanguage(context, language.languageCode);
-      },
-      items: LanguageData.languageList()
-          .map<DropdownMenuItem<LanguageData>>(
-            (e) => DropdownMenuItem<LanguageData>(
-              value: e,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Text(
-                    e.flag,
-                    style: TextStyle(fontSize: 30),
-                  ),
-                  Text(
-                    e.name,
-                    style: TextStyle(color: style.appTheme4().hintColor),
-                  )
-                ],
+class IntroItem extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  final Color bg;
+  final String imageUrl;
+
+  const IntroItem(
+      {Key key, @required this.title, this.subtitle, this.bg, this.imageUrl})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: bg ?? Theme.of(context).primaryColor,
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: <Widget>[
+              const SizedBox(height: 10),
+              Text(
+                title,
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 35.0,
+                    color: Colors.white),
               ),
-            ),
-          )
-          .toList(),
+              if (subtitle != null) ...[
+                const SizedBox(height: 10.0),
+                Text(
+                  subtitle,
+                  style: TextStyle(color: Colors.white, fontSize: 24.0),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+              const SizedBox(height: 20.0),
+              Expanded(
+                child: Container(
+                  margin: const EdgeInsets.only(bottom: 50),
+                  width: double.infinity,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(35.0),
+                    child: Material(
+                      elevation: 4.0,
+                      child: Image.asset(
+                        imageUrl,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

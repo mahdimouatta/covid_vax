@@ -1,4 +1,5 @@
 import 'package:covidvax/models/countryData.dart';
+import 'package:covidvax/screens/homePage.dart';
 import 'package:covidvax/screens/landingPage.dart';
 import 'package:covidvax/screens/countrieSelectionPage.dart';
 import 'package:flutter/material.dart';
@@ -81,7 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
         }
         return supportedLocales?.first;
       },
-      home: LandingPage(),
+      home: LandingPage2(),
     );
   }
 }

@@ -6,7 +6,7 @@ class LanguageFR extends Languages {
 
   @override
   String get landingText =>
-      "Sur cette application, vous trouverez des informations et des chiffres sur l'avvancement de la compagne de vaccination autour du monde.";
+      "Sur cette application, vous trouverez des informations et des chiffres sur l'avancement de la compagne de vaccination autour du monde.";
 
   String get landingText2 =>
       "Les données utilisées sont collectées par \"Our World in Data\".";
