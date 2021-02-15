@@ -26,9 +26,9 @@ class _IntroSixPageState extends State<LandingPage2> {
     LanguageFR().landingText + " " + LanguageFR().landingText2,
   ];
   final List<Color> colors = [
-    appTheme4().primaryColor,
-    appTheme4().hintColor,
-    appTheme4().dividerColor,
+    Color(0xFF5A2776),
+    Color(0xFFEF5370),
+    Color(0xFFFAB292),
   ];
   @override
   Widget build(BuildContext context) {
@@ -63,7 +63,13 @@ class _IntroSixPageState extends State<LandingPage2> {
           Align(
             alignment: Alignment.bottomLeft,
             child: FlatButton(
-              child: Text("Skip"),
+              child: Text(
+                "Skip",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20.0,
+                    color: Colors.white),
+              ),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -75,8 +81,11 @@ class _IntroSixPageState extends State<LandingPage2> {
           Align(
             alignment: Alignment.bottomRight,
             child: IconButton(
-              icon:
-                  Icon(_currentIndex == 2 ? Icons.check : Icons.arrow_forward),
+              icon: Icon(
+                _currentIndex == 2 ? Icons.check : Icons.arrow_forward,
+                size: 30,
+                color: Colors.white,
+              ),
               onPressed: () {
                 if (_currentIndex != 2)
                   _controller.next();

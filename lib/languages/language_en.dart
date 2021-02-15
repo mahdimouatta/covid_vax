@@ -43,4 +43,7 @@ class LanguageEn extends Languages {
 
   @override
   String get lastDate => "Last extraction date";
+
+  @override
+  String get next => "Next";
 }

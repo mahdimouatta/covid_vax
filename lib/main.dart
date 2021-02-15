@@ -9,14 +9,57 @@ import 'languages/localisations_delegate.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:covidvax/services/apiLogic.dart' as API;
 import 'package:covidvax/services/databaseHelper.dart';
+import 'dart:async';
+import 'package:nima/nima_actor.dart';
+import 'package:flutter/services.dart';
 
 Future<void> main() async {
-  runApp(MyHomePage());
+  runApp(MaterialApp(home: SplashScreen()));
   final dbHelper = DatabaseHelper.instance;
   List<CountryData> list = await API.getCountriesInfos();
   list.forEach((country) {
     dbHelper.insert(country);
   });
+}
+
+class SplashScreen extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return SplashScreenState();
+  }
+}
+
+class SplashScreenState extends State<SplashScreen> {
+  void initState() {
+    super.initState();
+
+    loadData();
+  }
+
+  Future<Timer> loadData() async {
+    return new Timer(Duration(seconds: 4), onDoneLoading);
+  }
+
+  onDoneLoading() async {
+    Navigator.of(context)
+        .pushReplacement(MaterialPageRoute(builder: (context) => MyHomePage()));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      child: Center(
+        child: Container(
+          margin: EdgeInsets.all(50),
+          child: NimaActor("assets/nima/logo.nima",
+              alignment: Alignment.center,
+              fit: BoxFit.contain,
+              animation: "anim1"),
+        ),
+      ),
+    );
+  }
 }
 
 class MyHomePage extends StatefulWidget {

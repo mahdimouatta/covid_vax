@@ -32,4 +32,6 @@ abstract class Languages {
   String get clickHere;
 
   String get lastDate;
+
+  String get next;
 }

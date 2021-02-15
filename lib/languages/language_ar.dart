@@ -44,4 +44,7 @@ class LanguageAR extends Languages {
 
   @override
   String get lastDate => "تاريخ آخر جرد";
+
+  @override
+  String get next => "التالي";
 }
