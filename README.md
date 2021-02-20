@@ -33,19 +33,15 @@ An app showing information and data about the progress of Covid-19 vaccination c
 
 ### Landing pages
 
-<img height="480px" src="screenshots/landing1.jpg">
-<img height="480px" src="screenshots/landing2.jpg">
-<img height="480px" src="screenshots/landing3.jpg">
+<img height="480px" src="screenshots/landing1.jpg"> <img height="480px" src="screenshots/landing2.jpg"> <img height="480px" src="screenshots/landing3.jpg">
 
 ### Home Page
 
-<img height="480px" src="screenshots/home.jpg">
-<img height="480px" src="screenshots/home2.jpg">
+<img height="480px" src="screenshots/home.jpg"><img height="480px" src="screenshots/home2.jpg">
 
 ### Choosing Country Page
 
-<img height="480px" src="screenshots/country1.jpg">
-<img height="480px" src="screenshots/country2.jpg">
+<img height="480px" src="screenshots/country1.jpg"> <img height="480px" src="screenshots/country2.jpg">
 
 ### Chart Page
 
