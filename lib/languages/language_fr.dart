@@ -1,3 +1,5 @@
+import 'package:flutter/src/widgets/framework.dart';
+
 import 'languages.dart';
 
 class LanguageFR extends Languages {
@@ -46,4 +48,10 @@ class LanguageFR extends Languages {
 
   @override
   String get next => "Suivant";
+
+  @override
+  String get home => "Accueil";
+
+  @override
+  String get previous => "Retour";
 }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:covidvax/languages/languages.dart';
 import 'package:covidvax/theme/style.dart' as style;
-import 'package:flag/flag.dart';
 import 'package:covidvax/models/countryData.dart';
 import 'package:intl/intl.dart';
 import 'package:covidvax/services/appConfig.dart';
@@ -41,16 +40,7 @@ class ChartPage extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         color: style.appTheme4().primaryColor),
                   ),
-                  Flag(
-                    country != null
-                        ? country.code != null
-                            ? country.code
-                                .substring(0, max(0, country.code.length - 1))
-                            : ""
-                        : "",
-                    height: _ac.rHP(20),
-                    width: _ac.rHP(50),
-                  ),
+                  Text(country.name),
                   SizedBox(
                     height: _ac.rHP(3),
                   ),

@@ -8,9 +8,10 @@ import 'package:covidvax/services/appConfig.dart';
 import 'package:covidvax/services/databaseHelper.dart';
 import 'package:covidvax/theme/style.dart' as style;
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flag/flag.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_placeholder_textlines/flutter_placeholder_textlines.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:nima/nima_actor.dart';
 
 class Home extends StatefulWidget {
   static void setCountry(BuildContext context, CountryData countryData) {
@@ -25,72 +26,136 @@ class Home extends StatefulWidget {
 TextEditingController controllerVille = new TextEditingController();
 
 class HomeState extends State<Home> {
+  bool _noCountryChoosen = false;
   AppConfig _ac;
   List<CountryData> a = [];
   final dbHelper = DatabaseHelper.instance;
   CountryData _country = new CountryData();
-
   @override
   Widget build(BuildContext context) {
     _ac = AppConfig(context);
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Container(
-        margin: EdgeInsets.all(30),
-        child: Center(
-          child: Column(
-            children: <Widget>[
-              SizedBox(
-                height: _ac.rHP(1),
-              ),
-              Flag(
-                _country != null
-                    ? _country.code != null
-                        ? _country.code
-                            .substring(0, max(0, _country.code.length - 1))
-                        : ""
-                    : "",
-                height: _ac.rHP(20),
-                width: 200,
-              ),
-              Text(
-                Languages.of(context).chooseCountry,
-                style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    color: style.appTheme4().primaryColor),
-              ),
-              SizedBox(
-                height: _ac.rHP(1),
-              ),
-              _createLanguageDropDownTest3(),
-              SizedBox(
-                height: _ac.rHP(1),
-              ),
-              Text(
-                Languages.of(context).information,
-                style: TextStyle(
-                    fontSize: 30, color: style.appTheme4().accentColor),
-                textAlign: TextAlign.center,
-              ),
-              _createCardInfos(),
-            ],
+    return Container(
+      decoration: BoxDecoration(
+          gradient:
+              LinearGradient(colors: [Color(0xff5A2776), Color(0xffFAB292)])),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Container(
+          margin: EdgeInsets.all(30),
+          child: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(height: 5),
+                SizedBox(
+                  child: NimaActor("assets/nima/logo.nima",
+                      alignment: Alignment.center,
+                      fit: BoxFit.contain,
+                      animation: "anim1"),
+                  height: 140,
+                ),
+                Text(
+                  _noCountryChoosen == true
+                      ? Languages.of(context).chooseCountry
+                      : "",
+                  style: TextStyle(
+                      color: Colors.red[900],
+                      fontSize: 20,
+                      fontWeight: FontWeight.w900),
+                ),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      _createLanguageDropDownTest(),
+                      Text(
+                        Languages.of(context).information,
+                        style: GoogleFonts.lemonada(
+                          textStyle: TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      _createCardInfos(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(100)),
+                                gradient: LinearGradient(colors: [
+                                  Color(0xff5A2776),
+                                  Color(0xffEF5370)
+                                ])),
+                            width: 140,
+                            height: 50,
+                            child: FlatButton(
+                              child: Text(
+                                Languages.of(context).home,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 25),
+                              ),
+                              onPressed: () {
+                                Navigator.pop(
+                                  context,
+                                );
+                              },
+                            ),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(100)),
+                                gradient: LinearGradient(colors: [
+                                  Color(0xffEF5370),
+                                  Color(0xffFAB292)
+                                ])),
+                            width: 140,
+                            height: 50,
+                            child: FlatButton(
+                              child: Text(
+                                Languages.of(context).more,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 25),
+                              ),
+                              onPressed: () async {
+                                if (_country.name != null) {
+                                  Map<String, double> totalVaccinations =
+                                      await API
+                                          .getVaccinatedData(_country.name);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ChartPage(
+                                              country: _country,
+                                              data: totalVaccinations,
+                                            )),
+                                  );
+                                } else {
+                                  setState(() {
+                                    _noCountryChoosen = true;
+                                  });
+                                }
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: style.appTheme4().scaffoldBackgroundColor,
-        onPressed: () {
-          Navigator.pop(
-            context,
-          );
-        },
-        child: Icon(
-          Icons.arrow_back,
-          color: style.appTheme4().buttonColor,
-          size: 45.0,
-        ),
-        elevation: 5,
       ),
     );
   }
@@ -98,6 +163,7 @@ class HomeState extends State<Home> {
   void setCountry(CountryData country) {
     setState(() {
       _country = country;
+      _noCountryChoosen = false;
     });
   }
 
@@ -221,96 +287,147 @@ class HomeState extends State<Home> {
       );
   }
 
-  _createCardInfos() {
-    if (_country.name != null) {
-      return Center(
-        child: Column(
-          children: [
-            Card(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Container(
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: _ac.rHP(2),
-                        ),
-                        createCardElt(
-                            Languages.of(context).vaccines, _country.vaccines),
-                        SizedBox(
-                          height: _ac.rHP(2),
-                        ),
-                        createCardElt(Languages.of(context).sourcesName,
-                            _country.sourceName),
-                        SizedBox(
-                          height: _ac.rHP(2),
-                        ),
-                        createCardElt(Languages.of(context).sourcesURL,
-                            _country.sourceUrl),
-                      ],
+  _createLanguageDropDownTest() {
+    return FutureBuilder<List<CountryData>>(
+      future: dbHelper.queryAllRows().then((value) => a = value),
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        if (a == null) {
+          return DropdownButton(items: null, onChanged: null);
+        } else {
+          List<CountryData> items2 = new List<CountryData>.from(a);
+          return Container(
+            child: DropdownButton<CountryData>(
+              dropdownColor: Colors.white,
+              iconSize: 40,
+              icon: Icon(
+                Icons.arrow_drop_down,
+                color: Colors.white,
+                size: 45,
+              ),
+              underline: Container(
+                height: 2,
+                color: Colors.white,
+                margin: EdgeInsets.only(top: 10),
+              ),
+              hint: Row(
+                children: [
+                  Icon(
+                    Icons.language,
+                    color: Colors.white,
+                  ),
+                  SizedBox(width: 10),
+                  Text(
+                    _country.name == null
+                        ? Languages.of(context).chooseCountry
+                        : _country.name,
+                    style: GoogleFonts.lemonada(
+                      textStyle: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
                     ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      TextButton.icon(
-                        icon: Icon(
-                          Icons.insert_chart,
-                          color: style.appTheme4().dividerColor,
-                        ),
-                        label: Text(
-                          Languages.of(context).more,
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: style.appTheme4().dividerColor),
-                        ),
-                        onPressed: () async {
-                          Map<String, double> totalVaccinations =
-                              await API.getVaccinatedData(_country.name);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ChartPage(
-                                      country: _country,
-                                      data: totalVaccinations,
-                                    )),
-                          );
-                        },
-                      ),
-                      const SizedBox(width: 8),
-                    ],
-                  ),
+                  )
                 ],
               ),
+              items: items2
+                  .map<DropdownMenuItem<CountryData>>(
+                    (e) => DropdownMenuItem<CountryData>(
+                      value: e,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            e.name,
+                            style: GoogleFonts.lemonada(
+                              textStyle: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xff5A2776)),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                  .toList(),
+              onChanged: (CountryData value) {
+                setCountry(value);
+              },
             ),
-          ],
+          );
+        }
+      },
+    );
+  }
+
+  _createCardInfos() {
+    if (_country.name != null) {
+      return Container(
+        color: Colors.transparent,
+        child: Center(
+          child: Card(
+            color: Color(0x44FAB292),
+            shadowColor: Color(0x445A2776),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.only(bottom: 15),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: _ac.rHP(2),
+                        width: 6000,
+                      ),
+                      createCardElt(
+                          Languages.of(context).vaccines, _country.vaccines),
+                      SizedBox(
+                        height: _ac.rHP(2),
+                      ),
+                      createCardElt(Languages.of(context).sourcesName,
+                          _country.sourceName),
+                      SizedBox(
+                        height: _ac.rHP(2),
+                      ),
+                      createCardElt(
+                          Languages.of(context).sourcesURL, _country.sourceUrl),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       );
     } else {
-      return Center(
-        child: Card(
-          margin: EdgeInsets.all(16),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Container(
-                padding: const EdgeInsets.all(15.0),
-                child: Column(
-                  children: [
-                    _createEmptyCardElt(Languages.of(context).vaccines),
-                    SizedBox(
-                      height: _ac.rHP(1),
-                    ),
-                    _createEmptyCardElt(Languages.of(context).sourcesName),
-                    SizedBox(
-                      height: _ac.rHP(1),
-                    ),
-                    _createEmptyCardElt(Languages.of(context).sourcesURL),
-                  ],
+      return Container(
+        color: Colors.transparent,
+        child: Center(
+          child: Card(
+            color: Color(0x44FAB292),
+            shadowColor: Color(0x445A2776),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Container(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Column(
+                    children: [
+                      _createEmptyCardElt(Languages.of(context).vaccines),
+                      SizedBox(
+                        height: _ac.rHP(1),
+                      ),
+                      _createEmptyCardElt(Languages.of(context).sourcesName),
+                      SizedBox(
+                        height: _ac.rHP(1),
+                      ),
+                      _createEmptyCardElt(Languages.of(context).sourcesURL),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       );
@@ -322,7 +439,10 @@ class HomeState extends State<Home> {
       Text(
         title,
         textAlign: TextAlign.center,
-        style: TextStyle(color: style.appTheme4().hintColor, fontSize: 20),
+        style: GoogleFonts.lemonada(
+          textStyle: TextStyle(
+              fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+        ),
       ),
       SizedBox(
         height: _ac.rHP(1),
@@ -331,6 +451,7 @@ class HomeState extends State<Home> {
         padding: const EdgeInsets.only(left: 10, right: 10),
         child: Text(
           content,
+          style: TextStyle(color: Colors.white),
           textAlign: TextAlign.center,
         ),
       ),
@@ -342,7 +463,10 @@ class HomeState extends State<Home> {
       Text(
         title,
         textAlign: TextAlign.center,
-        style: TextStyle(color: style.appTheme4().hintColor, fontSize: 20),
+        style: GoogleFonts.lemonada(
+          textStyle: TextStyle(
+              fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+        ),
       ),
       _buildAnimated(),
     ]);
@@ -355,7 +479,7 @@ class HomeState extends State<Home> {
         align: TextAlign.center,
         count: 2,
         animate: true,
-        color: Colors.grey,
+        color: Color(0xffFAB292),
       ),
     );
   }

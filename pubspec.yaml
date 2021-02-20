@@ -39,7 +39,6 @@ dev_dependencies:
   http: ^0.12.2
   csv_reader: ^1.0.2
   country_icons: ^1.1.1
-  flag: any
   flutter_placeholder_textlines: ^1.0.4
   sqflite:
   path: any
@@ -47,6 +46,8 @@ dev_dependencies:
   url_launcher: ^5.7.5
   flutter_swiper: ^1.1.6
   nima: ^1.0.5
+  google_fonts: ^1.1.2
+
 
 
 

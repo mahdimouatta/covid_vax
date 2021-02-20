@@ -46,4 +46,10 @@ class LanguageEn extends Languages {
 
   @override
   String get next => "Next";
+
+  @override
+  String get home => "Home";
+
+  @override
+  String get previous => "Back";
 }

@@ -34,4 +34,8 @@ abstract class Languages {
   String get lastDate;
 
   String get next;
+
+  String get previous;
+
+  String get home;
 }

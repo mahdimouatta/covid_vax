@@ -47,4 +47,10 @@ class LanguageAR extends Languages {
 
   @override
   String get next => "التالي";
+
+  @override
+  String get home => "الرئيسية";
+
+  @override
+  String get previous => "رجوع";
 }

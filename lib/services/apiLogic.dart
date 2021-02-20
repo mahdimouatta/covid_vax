@@ -75,6 +75,8 @@ Future<List<CountryData>> getCountriesInfos() async {
       for (var i in _vaccinesList) {
         _vaccines += i + " ✦ ";
       }
+      var url1 = list[5].toString();
+      var sourceUrl = url1.split("/")[0] + "//" + url1.split("/")[2] + "/";
       CountryData data = new CountryData(
           name: list[0],
           code: map[list[0].toString().toLowerCase()] != null
@@ -83,7 +85,7 @@ Future<List<CountryData>> getCountriesInfos() async {
           vaccines: _vaccines,
           date: list[3],
           sourceName: list[4],
-          sourceUrl: list[5]);
+          sourceUrl: sourceUrl);
       listOut.add(data);
     }
     return listOut;

@@ -1,4 +1,3 @@
-import 'package:flag/flag.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -12,11 +11,6 @@ class CountryPopUpItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Flag(
-          code.substring(0, max(0, code.length - 1)),
-          height: 50,
-          width: 30,
-        ),
         SizedBox(
           width: 10,
         ),
