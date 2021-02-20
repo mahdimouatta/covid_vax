@@ -37,7 +37,7 @@ An app showing information and data about the progress of Covid-19 vaccination c
 
 ### Home Page
 
-<img height="480px" src="screenshots/home.jpg"><img height="480px" src="screenshots/home2.jpg">
+<img height="480px" src="screenshots/home.jpg"> <img height="480px" src="screenshots/home2.jpg">
 
 ### Choosing Country Page
 
