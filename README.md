@@ -1,16 +1,52 @@
 # covidvax
 
-Covid 19 vaccination progress
+An app showing information and data about the progress of Covid-19 vaccination campaign around the world.
 
-## Getting Started
+## Packages Used
 
-This project is a starting point for a Flutter application.
+- Shared preferences(https://pub.dev/packages/shared_preferences)
+- csv(https://pub.dev/packages/csv)
+- http(https://pub.dev/packages/http)
+- flutter_placeholder_textlines(https://pub.dev/packages/flutter_placeholder_textlines)
+- sqflite(https://pub.dev/packages/sqflite)
+- path(https://pub.dev/packages/path)
+- fl_chart(https://pub.dev/packages/fl_chart)
+- url_launcher(https://pub.dev/packages/url_launcher)
+- flutter_swiper(https://pub.dev/packages/flutter_swiper)
+- nima(https://pub.dev/packages/nima)
+- google_fonts(https://pub.dev/packages/google_fonts)
+- flutter_launcher_icons(https://pub.dev/packages/flutter_launcher_icons)
 
-A few resources to get you started if this is your first Flutter project:
+## Credits
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+- [Our World in Data](https://ourworldindata.org)
+- coolvector / [Freepik](http://www.freepik.com).
+- macrovector / [Freepik](http://www.freepik.com).
+- slidesgo / [Freepik](http://www.freepik.com).
+- freepik / [Freepik](http://www.freepik.com).
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Application UI
+
+### Splash page
+
+<img height="480px" src="screenshots/splash.jpg">
+
+### Landing pages
+
+<img height="480px" src="screenshots/landing1.jpg">
+<img height="480px" src="screenshots/landing2.jpg">
+<img height="480px" src="screenshots/landing3.jpg">
+
+### Home Page
+
+<img height="480px" src="screenshots/home.jpg">
+<img height="480px" src="screenshots/home2.jpg">
+
+### Choosing Country Page
+
+<img height="480px" src="screenshots/country1.jpg">
+<img height="480px" src="screenshots/country2.jpg">
+
+### Chart Page
+
+<img height="480px" src="screenshots/Chart.jpg">

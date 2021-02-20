@@ -37,8 +37,6 @@ dev_dependencies:
   shared_preferences: ^0.5.12+4
   csv: ^4.1.0
   http: ^0.12.2
-  csv_reader: ^1.0.2
-  country_icons: ^1.1.1
   flutter_placeholder_textlines: ^1.0.4
   sqflite:
   path: any
@@ -47,6 +45,11 @@ dev_dependencies:
   flutter_swiper: ^1.1.6
   nima: ^1.0.5
   google_fonts: ^1.1.2
+  flutter_launcher_icons: "^0.8.1"
+flutter_icons:
+  image_path: "assets/images/logo.png"
+  android: true
+  ios: true
 
 
 
@@ -67,7 +70,6 @@ flutter:
   assets:
 #   - assets/images/background.png
    - assets/images/
-   - assets/files/countries.csv
    - assets/nima/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

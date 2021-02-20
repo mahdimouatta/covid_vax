@@ -49,17 +49,6 @@ Future<String> getLastData(country) async {
 }
 
 Future<List<CountryData>> getCountriesInfos() async {
-  Map<String, String> map = new Map<String, String>();
-  final input = await rootBundle.loadString('assets/files/countries.csv');
-  List<List<dynamic>> code =
-      csv.CsvToListConverter(eol: "\n").convert(input.toString(), eol: "\n");
-  for (var i in code) {
-    map[i[0].toString().toLowerCase()] = i[1].toString().toLowerCase();
-  }
-  print("input");
-  print(map.length);
-  List<List<dynamic>> a =
-      csv.CsvToListConverter(eol: "\n").convert(input.toString(), eol: "\n");
   var url =
       "https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/locations.csv";
   var response = await http.get(url);
@@ -79,9 +68,7 @@ Future<List<CountryData>> getCountriesInfos() async {
       var sourceUrl = url1.split("/")[0] + "//" + url1.split("/")[2] + "/";
       CountryData data = new CountryData(
           name: list[0],
-          code: map[list[0].toString().toLowerCase()] != null
-              ? map[list[0].toString().toLowerCase()]
-              : "",
+          code: list[1],
           vaccines: _vaccines,
           date: list[3],
           sourceName: list[4],
