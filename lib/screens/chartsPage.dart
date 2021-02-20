@@ -5,6 +5,8 @@ import 'package:covidvax/theme/style.dart' as style;
 import 'package:covidvax/models/countryData.dart';
 import 'package:intl/intl.dart';
 import 'package:covidvax/services/appConfig.dart';
+import 'package:covidvax/screens/homePage.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ChartPage extends StatelessWidget {
   final CountryData country;
@@ -16,60 +18,116 @@ class ChartPage extends StatelessWidget {
   Widget build(BuildContext context) {
     AppConfig _ac = AppConfig(context);
 
-    return MaterialApp(
-      home: Container(
-        constraints: BoxConstraints.expand(),
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("assets/images/back2.png"),
-                fit: BoxFit.fill)),
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: Container(
-            margin: EdgeInsets.all(30),
-            child: Center(
-              child: Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: _ac.rHP(2),
-                  ),
-                  Text(
-                    Languages.of(context).applicationName,
-                    style: TextStyle(
+    return Container(
+      decoration: BoxDecoration(
+          gradient:
+              LinearGradient(colors: [Color(0xff5A2776), Color(0xffFAB292)])),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Container(
+          margin: EdgeInsets.only(top: 20, right: 20, left: 10),
+          child: Center(
+            child: Column(
+              children: <Widget>[
+                SizedBox(
+                  height: _ac.rHP(2),
+                ),
+                Text(
+                  Languages.of(context).applicationName,
+                  style: GoogleFonts.lemonada(
+                    textStyle: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
-                        color: style.appTheme4().primaryColor),
+                        color: Colors.white),
                   ),
-                  Text(country.name),
-                  SizedBox(
-                    height: _ac.rHP(3),
+                ),
+                Text(
+                  country.name,
+                  style: GoogleFonts.caveat(
+                    textStyle: TextStyle(
+                        fontSize: 45,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
                   ),
-                  SizedBox(
-                    height: _ac.rHP(30),
-                    width: 600,
-                    child: LineChart(
-                      sampleData1(),
-                      swapAnimationDuration: Duration(milliseconds: 250),
-                    ),
+                ),
+                SizedBox(
+                  height: _ac.rHP(3),
+                ),
+                SizedBox(
+                  height: _ac.rHP(30),
+                  width: 600,
+                  child: LineChart(
+                    sampleData1(),
+                    swapAnimationDuration: Duration(milliseconds: 250),
                   ),
-                  _createCardInfos(context),
-                ],
-              ),
+                ),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      _createCardInfos(context),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(100)),
+                                gradient: LinearGradient(colors: [
+                                  Color(0xff5A2776),
+                                  Color(0xffEF5370)
+                                ])),
+                            width: 140,
+                            height: 50,
+                            child: FlatButton(
+                              child: Text(
+                                Languages.of(context).home,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 25),
+                              ),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => HomePage()),
+                                );
+                              },
+                            ),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(100)),
+                                gradient: LinearGradient(colors: [
+                                  Color(0xffEF5370),
+                                  Color(0xffFAB292)
+                                ])),
+                            width: 140,
+                            height: 50,
+                            child: FlatButton(
+                              child: Text(
+                                Languages.of(context).previous,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 25),
+                              ),
+                              onPressed: () async {
+                                Navigator.pop(
+                                  context,
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ),
-          floatingActionButton: FloatingActionButton(
-            backgroundColor: style.appTheme4().scaffoldBackgroundColor,
-            onPressed: () {
-              Navigator.pop(
-                context,
-              );
-            },
-            child: Icon(
-              Icons.arrow_back,
-              color: style.appTheme4().buttonColor,
-              size: 45.0,
-            ),
-            elevation: 5,
           ),
         ),
       ),
@@ -88,11 +146,13 @@ class ChartPage extends StatelessWidget {
                           .format(double.parse(i.y.toString())) +
                       "  " +
                       data.keys.elementAt(i.x.toInt()),
-                  TextStyle(color: style.appTheme4().hintColor)));
+                  TextStyle(
+                    color: Color(0xff5A2776),
+                  )));
             }
             return list;
           },
-          tooltipBgColor: style.appTheme4().scaffoldBackgroundColor,
+          tooltipBgColor: Colors.white,
         ),
         touchCallback: (LineTouchResponse touchResponse) {},
         handleBuiltInTouches: true,
@@ -105,7 +165,7 @@ class ChartPage extends StatelessWidget {
           showTitles: true,
           reservedSize: 22,
           getTextStyles: (value) => TextStyle(
-            color: style.appTheme4().hintColor,
+            color: Colors.white,
             fontWeight: FontWeight.bold,
             fontSize: 10,
           ),
@@ -122,7 +182,7 @@ class ChartPage extends StatelessWidget {
         leftTitles: SideTitles(
           showTitles: true,
           getTextStyles: (value) => TextStyle(
-            color: style.appTheme4().hintColor,
+            color: Colors.white,
             fontWeight: FontWeight.bold,
             fontSize: 10,
           ),
@@ -147,7 +207,7 @@ class ChartPage extends StatelessWidget {
         show: true,
         border: Border(
           bottom: BorderSide(
-            color: Colors.black,
+            color: Colors.white,
             width: 4,
           ),
           left: BorderSide(
@@ -183,15 +243,26 @@ class ChartPage extends StatelessWidget {
     final LineChartBarData lineChartBarData1 = LineChartBarData(
       spots: getSpots(),
       isCurved: true,
-      colors: [Colors.red, Colors.deepOrange, Colors.yellow, Colors.green],
-      barWidth: 8,
+      colors: [
+        Colors.white12,
+        Colors.white10,
+        Colors.white,
+      ],
+      barWidth: 3,
       isStrokeCapRound: true,
       dotData: FlDotData(
-        show: true,
+        show: false,
       ),
       belowBarData: BarAreaData(
         show: true,
-        colors: [Colors.red, Colors.deepOrange, Colors.yellow, Colors.green],
+        colors: [
+          Color(0x44FAB292),
+          Color(0x66FAB292),
+          Color(0x99AF60A6),
+          Color(0xFFAF60A6),
+          Color(0xDD5A2776),
+          Color(0xFF5A2776),
+        ],
       ),
     );
     return [lineChartBarData1];
@@ -202,13 +273,17 @@ class ChartPage extends StatelessWidget {
       Text(
         title,
         textAlign: TextAlign.center,
-        style: TextStyle(color: style.appTheme4().hintColor, fontSize: 20),
+        style: GoogleFonts.lemonada(
+          textStyle: TextStyle(
+              fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+        ),
       ),
       SizedBox(
         height: 15,
       ),
       Text(
         NumberFormat.decimalPattern().format(double.parse(content)),
+        style: TextStyle(color: Colors.white, fontSize: 18),
         textAlign: TextAlign.center,
       ),
     ]);
@@ -219,53 +294,63 @@ class ChartPage extends StatelessWidget {
       Text(
         title,
         textAlign: TextAlign.center,
-        style: TextStyle(color: style.appTheme4().hintColor, fontSize: 20),
+        style: GoogleFonts.lemonada(
+          textStyle: TextStyle(
+              fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+        ),
       ),
       SizedBox(
         height: 15,
       ),
       Text(
         content,
+        style: TextStyle(color: Colors.white),
         textAlign: TextAlign.center,
       ),
     ]);
   }
 
   _createCardInfos(BuildContext context) {
-    return Center(
-      child: Column(
-        children: [
-          Card(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Container(
-                  child: Column(
-                    children: [
-                      Row(),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      createCardElt(Languages.of(context).lastDate,
-                          data.keys.last.toString()),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      createCardNumElt(
-                          Languages.of(context).totalVaccinations,
-                          data.values
-                              .reduce((curr, next) => curr > next ? curr : next)
-                              .toString()),
-                      SizedBox(
-                        height: 15,
-                      ),
-                    ],
+    return Container(
+      color: Colors.transparent,
+      child: Center(
+        child: Column(
+          children: [
+            Card(
+              color: Color(0x44FAB292),
+              shadowColor: Color(0x445A2776),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Container(
+                    child: Column(
+                      children: [
+                        Row(),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        createCardElt(Languages.of(context).lastDate,
+                            data.keys.last.toString()),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        createCardNumElt(
+                            Languages.of(context).totalVaccinations,
+                            data.values
+                                .reduce(
+                                    (curr, next) => curr > next ? curr : next)
+                                .toString()),
+                        SizedBox(
+                          height: 15,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
