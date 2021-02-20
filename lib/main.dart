@@ -1,17 +1,16 @@
+import 'dart:async';
+
 import 'package:covidvax/models/countryData.dart';
-import 'package:covidvax/screens/homePage.dart';
 import 'package:covidvax/screens/landingPage.dart';
-import 'package:covidvax/screens/countrieSelectionPage.dart';
-import 'package:flutter/material.dart';
-import './theme/style.dart';
-import './languages/locale_constant.dart';
-import 'languages/localisations_delegate.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:covidvax/services/apiLogic.dart' as API;
 import 'package:covidvax/services/databaseHelper.dart';
-import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:nima/nima_actor.dart';
-import 'package:flutter/services.dart';
+
+import './languages/locale_constant.dart';
+import './theme/style.dart';
+import 'languages/localisations_delegate.dart';
 
 Future<void> main() async {
   runApp(MaterialApp(home: SplashScreen()));
@@ -98,6 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
   var url =
       'https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/country_data/United Arab Emirates.csv';
   var a;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

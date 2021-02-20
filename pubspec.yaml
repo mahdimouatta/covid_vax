@@ -42,8 +42,7 @@ dev_dependencies:
   flag: any
   flutter_placeholder_textlines: ^1.0.4
   sqflite:
-  path:
-  path_provider:
+  path: any
   fl_chart: ^0.12.2
   url_launcher: ^5.7.5
   flutter_swiper: ^1.1.6

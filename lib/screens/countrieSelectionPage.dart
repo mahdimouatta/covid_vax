@@ -28,80 +28,69 @@ class HomeState extends State<Home> {
   AppConfig _ac;
   List<CountryData> a = [];
   final dbHelper = DatabaseHelper.instance;
-  var url =
-      'https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/country_data/United Arab Emirates.csv';
   CountryData _country = new CountryData();
 
   @override
   Widget build(BuildContext context) {
     _ac = AppConfig(context);
-    return MaterialApp(
-      home: Container(
-        constraints: BoxConstraints.expand(),
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("assets/images/back2.png"),
-                fit: BoxFit.fill)),
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: Container(
-            margin: EdgeInsets.all(30),
-            child: Center(
-              child: Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: _ac.rHP(1),
-                  ),
-                  Flag(
-                    _country != null
-                        ? _country.code != null
-                            ? _country.code
-                                .substring(0, max(0, _country.code.length - 1))
-                            : ""
-                        : "",
-                    height: _ac.rHP(20),
-                    width: 200,
-                  ),
-                  Text(
-                    Languages.of(context).chooseCountry,
-                    style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                        color: style.appTheme4().primaryColor),
-                  ),
-                  SizedBox(
-                    height: _ac.rHP(1),
-                  ),
-                  _createLanguageDropDownTest3(),
-                  SizedBox(
-                    height: _ac.rHP(1),
-                  ),
-                  Text(
-                    Languages.of(context).information,
-                    style: TextStyle(
-                        fontSize: 30, color: style.appTheme4().accentColor),
-                    textAlign: TextAlign.center,
-                  ),
-                  _createCardInfos(),
-                ],
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Container(
+        margin: EdgeInsets.all(30),
+        child: Center(
+          child: Column(
+            children: <Widget>[
+              SizedBox(
+                height: _ac.rHP(1),
               ),
-            ),
-          ),
-          floatingActionButton: FloatingActionButton(
-            backgroundColor: style.appTheme4().scaffoldBackgroundColor,
-            onPressed: () {
-              Navigator.pop(
-                context,
-              );
-            },
-            child: Icon(
-              Icons.arrow_back,
-              color: style.appTheme4().buttonColor,
-              size: 45.0,
-            ),
-            elevation: 5,
+              Flag(
+                _country != null
+                    ? _country.code != null
+                        ? _country.code
+                            .substring(0, max(0, _country.code.length - 1))
+                        : ""
+                    : "",
+                height: _ac.rHP(20),
+                width: 200,
+              ),
+              Text(
+                Languages.of(context).chooseCountry,
+                style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: style.appTheme4().primaryColor),
+              ),
+              SizedBox(
+                height: _ac.rHP(1),
+              ),
+              _createLanguageDropDownTest3(),
+              SizedBox(
+                height: _ac.rHP(1),
+              ),
+              Text(
+                Languages.of(context).information,
+                style: TextStyle(
+                    fontSize: 30, color: style.appTheme4().accentColor),
+                textAlign: TextAlign.center,
+              ),
+              _createCardInfos(),
+            ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: style.appTheme4().scaffoldBackgroundColor,
+        onPressed: () {
+          Navigator.pop(
+            context,
+          );
+        },
+        child: Icon(
+          Icons.arrow_back,
+          color: style.appTheme4().buttonColor,
+          size: 45.0,
+        ),
+        elevation: 5,
       ),
     );
   }
