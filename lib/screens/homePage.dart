@@ -6,6 +6,7 @@ import 'package:covidvax/services/appConfig.dart';
 import 'package:covidvax/theme/style.dart' as style;
 import 'package:covidvax/components/clipper.dart';
 import 'package:flutter/material.dart';
+import 'package:covidvax/components/language_annim.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -14,7 +15,8 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
   AppConfig _ac;
-
+  var from;
+  var to;
   @override
   Widget build(BuildContext context) {
     _ac = AppConfig(context);
@@ -78,6 +80,19 @@ class HomePageState extends State<HomePage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
+                  FutureBuilder(
+                    future: getLocale().then((value) {
+//                      from = value;
+                    }),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<dynamic> snapshot) {
+                      return Container(
+                        width: 150,
+                        height: 80,
+                        child: FlareAnimation.lang('$from', to),
+                      );
+                    },
+                  ),
                   Container(
                     margin:
                         EdgeInsets.only(left: _ac.rHP(4), right: _ac.rHP(4)),
@@ -143,8 +158,12 @@ class HomePageState extends State<HomePage> {
           ),
         ],
       ),
+      onTap: () {
+        getLocale().then((value) => from = value);
+      },
       onChanged: (LanguageData language) {
         changeLanguage(context, language.languageCode);
+        to = language.languageCode;
       },
       items: LanguageData.languageList()
           .map<DropdownMenuItem<LanguageData>>(

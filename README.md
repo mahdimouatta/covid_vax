@@ -45,4 +45,4 @@ An app showing information and data about the progress of Covid-19 vaccination c
 
 ### Chart Page
 
-<img height="480px" src="screenshots/Chart.jpg">
+<img height="480px" src="screenshots/chart.jpg">

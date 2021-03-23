@@ -297,6 +297,7 @@ class HomeState extends State<Home> {
           List<CountryData> items2 = new List<CountryData>.from(a);
           return Container(
             child: DropdownButton<CountryData>(
+              isExpanded: true,
               dropdownColor: Colors.white,
               iconSize: 40,
               icon: Icon(
@@ -316,15 +317,19 @@ class HomeState extends State<Home> {
                     color: Colors.white,
                   ),
                   SizedBox(width: 10),
-                  Text(
-                    _country.name == null
-                        ? Languages.of(context).chooseCountry
-                        : _country.name,
-                    style: GoogleFonts.lemonada(
-                      textStyle: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
+                  SizedBox(
+                    width: 250,
+                    child: Text(
+                      _country.name == null
+                          ? Languages.of(context).chooseCountry
+                          : _country.name,
+                      overflow: TextOverflow.ellipsis,
+                      style: GoogleFonts.lemonada(
+                        textStyle: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
                     ),
                   )
                 ],
@@ -337,13 +342,17 @@ class HomeState extends State<Home> {
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Text(
-                            e.name,
-                            style: GoogleFonts.lemonada(
-                              textStyle: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xff5A2776)),
+                          SizedBox(
+                            width: 300,
+                            child: Text(
+                              e.name,
+                              overflow: TextOverflow.ellipsis,
+                              style: GoogleFonts.lemonada(
+                                textStyle: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xff5A2776)),
+                              ),
                             ),
                           ),
                         ],
